@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 .idea/
+allure*/
 *.py[cod]
 *$py.class
 

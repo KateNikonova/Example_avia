@@ -1,24 +1,22 @@
 import allure
 import requests
 from faker import Faker
+from config import API_HEADERS
 
 
 class ApiPage:
     def __init__(self, url):
         self.base_url = url
         self.fake = Faker()
+        self.headers = API_HEADERS
 
     @allure.step("Отправка запроса на поиск города по коду '{term}'")
-    def register_user(self, locale, term):
-        """Универсальный метод для регистрации пользователя"""
-        url = f"{self.base_url}/v2/code_to_places.json?"
+    def get_city_by_term(self, locale, term):
+        """Метод для поиска города по коду аэропорта"""
+        url = f"{self.base_url}/v2/code_to_places.json"
 
-        # Генерация данных, если они не переданы
-        locale = locale or f"{self.fake.user_name()}@{self.fake.free_email_domain()}"
-        term = term or self.fake.password(length=10)
-
-        data = {
+        params = {
             "locale": locale,
             "term": term
         }
-        return requests.get(url, data=data)
+        return requests.get(url, headers=self.headers, params=params)
